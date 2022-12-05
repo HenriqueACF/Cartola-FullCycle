@@ -5,7 +5,7 @@ import "github.com/google/uuid"
 type GameAction struct {
 	ID         string
 	PlayerID   string
-	PlayerNAme string
+	PlayerName string
 	TeamID     string
 	Minute     int
 	Action     string

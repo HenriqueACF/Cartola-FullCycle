@@ -1,9 +1,8 @@
 package repository
 
 import (
-	"errors"
-
-	"github.com/devfullcycle/imersao10-consolidacao/internal/infra/db"
+    "errors"
+    "cartola-backend/internal/infra/db"
 )
 
 var ErrQueriesNotSet = errors.New("queries not set")

@@ -3,9 +3,9 @@ package usecase
 import (
 	"context"
 
-	"github.com/devfullcycle/imersao10-consolidacao/internal/domain/repository"
-	"github.com/devfullcycle/imersao10-consolidacao/internal/domain/service"
-	"github.com/devfullcycle/imersao10-consolidacao/pkg/uow"
+    "cartola-backend/internal/domain/repository"
+    "cartola-backend/internal/domain/service"
+    "cartola-backend/pkg/uow"
 )
 
 type MyTeamChoosePlayersInput struct {

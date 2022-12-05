@@ -1,15 +1,15 @@
 package repository
 
 import (
-	"context"
+    "context"
 	"database/sql"
 	"fmt"
 	"strconv"
 	"strings"
 	"time"
 
-	"github.com/devfullcycle/imersao10-consolidacao/internal/domain/entity"
-	"github.com/devfullcycle/imersao10-consolidacao/internal/infra/db"
+    "cartola-backend/internal/domain/entity"
+    "cartola-backend/internal/infra/db"
 )
 
 type MatchRepository struct {

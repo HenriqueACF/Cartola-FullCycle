@@ -12,5 +12,4 @@ func NewMyTeam(id, name string) *MyTeam {
 		ID:   id,
 		Name: name,
 	}
-
 }

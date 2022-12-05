@@ -4,9 +4,9 @@ import (
 	"context"
 	"time"
 
-	"github.com/devfullcycle/imersao10-consolidacao/internal/domain/entity"
-	"github.com/devfullcycle/imersao10-consolidacao/internal/domain/repository"
-	"github.com/devfullcycle/imersao10-consolidacao/pkg/uow"
+    "cartola-backend/internal/domain/entity"
+    "cartola-backend/internal/domain/repository"
+    "cartola-backend/pkg/uow"
 )
 
 type MatchInput struct {
