@@ -1,11 +1,11 @@
 package repository
 
 import (
-    "context"
+	"context"
 	"database/sql"
 
-    "cartola-backend/internal/domain/entity"
-    "cartola-backend/internal/infra/db"
+    "github.com/cartola-backend/internal/domain/entity"
+    "github.com/cartola-backend/internal/infra/db"
 )
 
 type MyTeamRepository struct {
@@ -26,12 +26,7 @@ func (m *MyTeamRepository) AddScore(ctx context.Context, myTeam *entity.MyTeam, 
 	if err != nil {
 		return err
 	}
-
-	err = m.Queries.AddScoreToTeam(ctx, db.AddScoreToTeamParams{
-		ID:    myTeam.ID,
-		Score: score,
-	})
-	return err
+	return nil
 }
 
 func (m *MyTeamRepository) FindByID(ctx context.Context, id string) (*entity.MyTeam, error) {
@@ -112,6 +107,14 @@ func (m *MyTeamRepository) SavePlayers(ctx context.Context, myTeam *entity.MyTea
 		if err != nil {
 			return err
 		}
+	}
+
+	err = m.Queries.UpdateMyTeamScore(ctx, db.UpdateMyTeamScoreParams{
+		ID:    myTeam.ID,
+		Score: myTeam.Score,
+	})
+	if err != nil {
+		return err
 	}
 	return nil
 }

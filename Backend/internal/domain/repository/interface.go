@@ -1,8 +1,9 @@
 package repository
 
 import (
-    "context"
-    "cartola-backend/internal/domain/entity"
+	"context"
+
+    "github.com/cartola-backend/internal/domain/entity"
 )
 
 type MyTeamRepositoryInterface interface {

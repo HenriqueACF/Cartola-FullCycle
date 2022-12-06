@@ -1,17 +1,23 @@
 package main
 
 import (
+    "github.com/cartola-backend/internal/infra/db"
+    "github.com/cartola-backend/internal/infra/kafka/consumer"
+    "github.com/cartola-backend/internal/infra/repository"
+    "github.com/cartola-backend/pkg/uow"
     "context"
 	"database/sql"
+	"net/http"
 
-    "cartola-backend/internal/infra/repository"
-    "cartola-backend/internal/infra/db"
-    "cartola-backend/pkg/uow"
+    httphandler "github.com/cartola-backend/internal/infra/http"
+	"github.com/go-chi/chi"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func main() {
 	ctx := context.Background()
-	dtb, err := sql.Open("mysql", "root:root@tcp(localhost:3306)/cartola?parseTime=true")
+	dtb, err := sql.Open("mysql", "root:root@tcp(mysql:3306)/cartola?parseTime=true")
 	if err != nil {
 		panic(err)
 	}
@@ -21,6 +27,20 @@ func main() {
 		panic(err)
 	}
 	registerRepositories(uow)
+
+	r := chi.NewRouter()
+	r.Get("/players", httphandler.ListPlayersHandler(ctx, *db.New(dtb)))
+	r.Get("/my-teams/{teamID}/players", httphandler.ListMyTeamPlayersHandler(ctx, *db.New(dtb)))
+	r.Get("/my-teams/{teamID}/balance", httphandler.GetMyTeamBalanceHandler(ctx, *db.New(dtb)))
+	r.Get("/matches", httphandler.ListMatchesHandler(ctx, repository.NewMatchRepository(dtb)))
+	r.Get("/matches/{matchID}", httphandler.ListMatchByIDHandler(ctx, repository.NewMatchRepository(dtb)))
+
+	go http.ListenAndServe(":8081", r)
+
+	var topics = []string{"newMatch", "chooseTeam", "newPlayer", "matchUpdateResult", "newAction"}
+	msgChan := make(chan *kafka.Message)
+	go consumer.Consume(topics, "broker:9094", msgChan)
+	consumer.ProcessEvents(ctx, msgChan, uow)
 }
 
 func registerRepositories(uow *uow.Uow) {

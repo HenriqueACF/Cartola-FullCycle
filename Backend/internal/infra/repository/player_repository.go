@@ -1,11 +1,11 @@
 package repository
 
 import (
-    "context"
+	"context"
 	"database/sql"
 
-    "cartola-backend/internal/domain/entity"
-    "cartola-backend/internal/infra/db"
+    "github.com/cartola-backend/internal/domain/entity"
+    "github.com/cartola-backend/internal/infra/db"
 )
 
 type PlayerRepository struct {

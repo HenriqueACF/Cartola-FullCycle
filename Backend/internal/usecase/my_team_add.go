@@ -3,9 +3,9 @@ package usecase
 import (
 	"context"
 
-    "cartola-backend/internal/domain/entity"
-    "cartola-backend/internal/domain/repository"
-    "cartola-backend/pkg/uow"
+    "github.com/cartola-backend/internal/domain/entity"
+    "github.com/cartola-backend/internal/domain/repository"
+    "github.com/cartola-backend/pkg/uow"
 )
 
 type AddMyTeamInput struct {
@@ -25,7 +25,8 @@ func (a *AddMyTeamUseCase) Execute(ctx context.Context, input AddMyTeamInput) er
 	if err != nil {
 		return err
 	}
-	return a.Uow.CommitOrRollback()
+	a.Uow.CommitOrRollback()
+	return nil
 }
 
 func (a *AddMyTeamUseCase) getMyTeamRepository(ctx context.Context) repository.MyTeamRepositoryInterface {
